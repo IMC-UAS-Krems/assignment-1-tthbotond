@@ -13,3 +13,66 @@ Classes to implement:
       - NarrativeEpisode
     - AudiobookTrack
 """
+
+from datetime import date
+
+
+class Track:
+    def __init__(self, track_id, title, duration_seconds, genre):
+        self.track_id = track_id
+        self.title = title
+        self.duration_seconds = duration_seconds
+        self.genre = genre
+    
+    def duration_minutes(self):
+        minutes = self.duration_seconds / 60.0
+        return minutes
+    
+    def __eq__(self, other):
+        if not isinstance(other, Track):
+            return False
+        same_id = self.track_id == other.track_id
+        return same_id
+
+
+class Song(Track):
+    def __init__(self, track_id, title, duration_seconds, genre, artist):
+        super().__init__(track_id, title, duration_seconds, genre)
+        self.artist = artist
+
+
+class SingleRelease(Song):
+    def __init__(self, track_id, title, duration_seconds, genre, artist, release_date = None):
+        super().__init__(track_id, title, duration_seconds, genre, artist)
+        self.release_date = release_date
+
+
+class AlbumTrack(Song):
+    def __init__(self, track_id, title, duration_seconds, genre, artist, track_number):
+        super().__init__(track_id, title, duration_seconds, genre, artist)
+        self.track_number = track_number
+        self.album = None
+
+
+class Podcast(Track):
+    def __init__(self, track_id, title, duration_seconds, genre, host, description = ""):
+        super().__init__(track_id, title, duration_seconds, genre)
+        self.host = host
+        self.description = description
+
+class InterviewEpisode(Podcast):
+    def __init__(self, track_id, title, duration_seconds, genre, host, guest, description = ""):
+        super().__init__(track_id, title, duration_seconds, genre, host, description)
+        self.guest = guest
+
+class NarrativeEpisode(Podcast):
+    def __init__(self, track_id, title, duration_seconds, genre, host, season, episode_number, description = ""):
+        super().__init__(track_id, title, duration_seconds, genre, host, description)
+        self.season = season
+        self.episode_number = episode_number
+
+class AudiobookTrack(Track):
+    def __init__(self, track_id, title, duration_seconds, genre, author, narrator):
+        super().__init__(track_id, title, duration_seconds, genre)
+        self.author = author
+        self.narrator = narrator

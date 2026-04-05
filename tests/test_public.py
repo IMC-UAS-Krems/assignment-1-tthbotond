@@ -23,7 +23,7 @@ from datetime import datetime, timedelta
 from streaming.platform import StreamingPlatform
 from streaming.users import FreeUser, PremiumUser, FamilyAccountUser, FamilyMember
 from streaming.playlists import CollaborativePlaylist
-from tests.conftest import FIXED_NOW, RECENT, OLD
+from conftest import FIXED_NOW, RECENT, OLD
 
 
 # ===========================================================================
