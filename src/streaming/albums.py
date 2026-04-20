@@ -17,19 +17,15 @@ class Album:
         self.tracks = []
     
     def add_track(self, track):
+        """add track to album and set reference"""
         track.album = self
         self.tracks.append(track)
-        sorted_tracks = sorted(self.tracks, key=lambda t: t.track_number)
-        self.tracks = sorted_tracks
+        self.tracks.sort(key=lambda t: t.track_number)
     
     def track_ids(self):
-        ids = set()
-        for track in self.tracks:
-            ids.add(track.track_id)
-        return ids
+        """return set of all track ids in this album"""
+        return {track.track_id for track in self.tracks}
     
     def duration_seconds(self):
-        total = 0
-        for track in self.tracks:
-            total += track.duration_seconds
-        return total
+        """total length of all songs"""
+        return sum(track.duration_seconds for track in self.tracks)

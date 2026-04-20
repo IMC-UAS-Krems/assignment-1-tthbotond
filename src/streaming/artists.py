@@ -15,8 +15,9 @@ class Artist:
         self.tracks = []
     
     def add_track(self, track):
+        """register track with this artist"""
         self.tracks.append(track)
     
     def track_count(self):
-        count = len(self.tracks)
-        return count
+        """how many tracks does this artist have"""
+        return len(self.tracks)

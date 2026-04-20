@@ -9,6 +9,7 @@ Classes to implement:
 
 from datetime import datetime
 
+
 class ListeningSession:
     def __init__(self, session_id, user, track, timestamp, duration_listened_seconds):
         self.session_id = session_id
@@ -20,5 +21,5 @@ class ListeningSession:
         user.add_session(self)
     
     def duration_listened_minutes(self):
-        minutes = self.duration_listened_seconds / 60.0
-        return minutes
+        """convert listening time to minutes"""
+        return self.duration_listened_seconds / 60.0

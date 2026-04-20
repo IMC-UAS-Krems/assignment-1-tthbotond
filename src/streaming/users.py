@@ -21,24 +21,20 @@ class User:
         self.sessions = []
         
     def add_session(self, session):
+        """add listening session to user"""
         self.sessions.append(session)
         
     def total_listening_seconds(self):
-        total = 0
-        for session in self.sessions:
-            total += session.duration_seconds
-        return total
+        """sum up all listening time"""
+        return sum(session.duration_seconds for session in self.sessions)
         
     def total_listening_minutes(self):
-        seconds = self.total_listening_seconds()
-        minutes = seconds / 60.0
-        return minutes
+        """convert total seconds to minutes"""
+        return self.total_listening_seconds() / 60.0
     
     def unique_tracks_listened(self):
-        tracks = set()
-        for session in self.sessions:
-            tracks.add(session.track.track_id)
-        return tracks
+        """get set of unique tracks user has heard"""
+        return {session.track.track_id for session in self.sessions}
 
 
 class FreeUser(User):
@@ -50,27 +46,22 @@ class FreeUser(User):
 class PremiumUser(User):
     def __init__(self, user_id, name, age, subscription_start = None):
         super().__init__(user_id, name, age)
-        if subscription_start is None:
-            self.subscription_start = date.today()
-        else:
-            self.subscription_start = subscription_start
+        self.subscription_start = subscription_start or date.today()
 
 
 class FamilyAccountUser(PremiumUser):
+    # inherits from premium user for the premium features
     def __init__(self, user_id, name, age, subscription_start = None, sub_users = None):
         super().__init__(user_id, name, age, subscription_start)
-        if sub_users is None:
-            self.sub_users = []
-        else:
-            self.sub_users = sub_users
+        self.sub_users = sub_users if sub_users is not None else []
         
     def add_sub_user(self, sub_user):
+        """add family member to account"""
         self.sub_users.append(sub_user)
         
     def all_members(self):
-        members = [self]
-        members.extend(self.sub_users)
-        return members
+        """return list of account holder and all family members"""
+        return [self] + self.sub_users
 
 
 class FamilyMember(User):
